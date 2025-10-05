@@ -10,7 +10,6 @@ class FloatingNavBar extends StatelessWidget {
     required this.currentIndex,
     required this.onTap,
   });
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;

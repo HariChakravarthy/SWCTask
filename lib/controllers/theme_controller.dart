@@ -14,7 +14,6 @@ class ThemeController extends GetxController {
       isDarkMode.value = saved;
     }
   }
-
   ThemeMode get theme =>
       isDarkMode.value ? ThemeMode.dark : ThemeMode.light;
 
