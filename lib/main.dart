@@ -68,16 +68,16 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[900],
+      backgroundColor: Colors.orangeAccent,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Icon(Icons.food_bank_outlined, size: 100, color: Colors.white),
+            Icon(Icons.food_bank_outlined, size: 100, color: Colors.black),
             SizedBox(height: 20),
             Text(
               'Recipe App',
-              style: TextStyle(fontSize: 28, color: Colors.white),
+              style: TextStyle(fontSize: 28, color: Colors.black),
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/services/recipe_model.dart';
 import 'package:my_first_app/services/recipe_service.dart';
+import 'package:get/get.dart';
+import 'package:my_first_app/controllers/theme_controller.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
   final int recipeId;
@@ -13,6 +15,7 @@ class RecipeDetailScreen extends StatefulWidget {
 class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   late Future<RecipeModel> _recipeFuture;
   final RecipeService _recipeService = RecipeService();
+  final themeController = Get.find<ThemeController>();
 
   @override
   void initState() {
@@ -43,8 +46,9 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(
                     recipe.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
+                      color: themeController.isDarkMode.value ? Colors.white : Colors.black87,
                       shadows: [Shadow(blurRadius: 4, color: Colors.black)],
                     ),
                   ),
@@ -76,11 +80,75 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       if (recipe.summary != null)
                         Text(
                           _removeHtmlTags(recipe.summary!),
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.black87, height: 1.5),
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: themeController.isDarkMode.value ? Colors.white : Colors.black87,
+                              height: 1.5),
                         ),
                       const SizedBox(height: 20),
-                      /*const Text(
+                      const Text(
+                        'Ingredients',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      Column(
+                        children: recipe.ingredients?.map((item) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 4.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(Icons.check_circle_outline, color: Colors.green, size: 18),
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    item,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                      color: themeController.isDarkMode.value ? Colors.white : Colors.black87,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList() ?? [const SizedBox.shrink()], // Handle the null case explicitly
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Instructions',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      if (recipe.instructions != null)
+                        Text(
+                          _removeHtmlTags(recipe.instructions!),
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: themeController.isDarkMode.value ? Colors.white : Colors.white30,
+                              height: 1.5
+                          ),
+                        ),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+  String _removeHtmlTags(String htmlString) {
+    final regex = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
+    return htmlString.replaceAll(regex, '');
+  }
+}
+
+/*const Text(
                         'Ingredients',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
@@ -102,62 +170,3 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                             ],
                           ),
                         ),*/
-                      const Text(
-                        'Ingredients',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      // A Column is often clearer for lists of widgets.
-                      Column(
-                        // You can still use the null-aware operator here for conciseness
-                        children: recipe.ingredients?.map((item) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 4.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Icon(Icons.check_circle_outline, color: Colors.green, size: 18),
-                                const SizedBox(width: 6),
-                                Expanded(
-                                  child: Text(
-                                    item,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList() ?? [const SizedBox.shrink()], // Handle the null case explicitly
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Instructions',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      if (recipe.instructions != null)
-                        Text(
-                          _removeHtmlTags(recipe.instructions!),
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.black87, height: 1.5),
-                        ),
-                      const SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  // Helper to remove HTML tags from Spoonacular responses
-  String _removeHtmlTags(String htmlString) {
-    final regex = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
-    return htmlString.replaceAll(regex, '');
-  }
-}
