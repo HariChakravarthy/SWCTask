@@ -8,8 +8,6 @@ import 'package:my_first_app/controllers/theme_controller.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-
-  // Initialize controllers
   Get.put(RecipeController(), permanent: true);
   final themeController = Get.put(ThemeController(), permanent: true);
 
