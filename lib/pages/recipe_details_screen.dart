@@ -36,7 +36,6 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           } else if (!snapshot.hasData) {
             return const Center(child: Text('Recipe not found'));
           }
-
           final recipe = snapshot.data!;
           return CustomScrollView(
             slivers: [
@@ -113,7 +112,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                               ],
                             ),
                           );
-                        }).toList() ?? [const SizedBox.shrink()], // Handle the null case explicitly
+                        }).toList() ?? [const SizedBox.shrink()],
                       ),
                       const SizedBox(height: 20),
                       const Text(
@@ -147,26 +146,3 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     return htmlString.replaceAll(regex, '');
   }
 }
-
-/*const Text(
-                        'Ingredients',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      if (recipe.ingredients != null)
-                        ...recipe.ingredients!.map(
-                              (item) => Row(
-                            children: [
-                              const Icon(Icons.check_circle_outline,
-                                  color: Colors.green, size: 18),
-                              const SizedBox(width: 6),
-                              Expanded(
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),*/

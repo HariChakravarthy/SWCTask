@@ -25,74 +25,87 @@ class RecipeCard extends StatelessWidget {
           ),
         );
       },
-      child: Stack(
-        children: [
-          Container(
-            width: 160,
-            decoration: BoxDecoration(
-              color: Colors.amber[50],
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 6,
-                    offset: const Offset(2, 2)),
-              ],
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.amber[50],
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 6,
+              offset: const Offset(2, 2),
             ),
-            clipBehavior: Clip.hardEdge,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.network(
-                  recipe.image,
-                  height: 120,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    recipe.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                if (recipe.readyInMinutes != null)
-                  Row(
-                    children: [
-                      const Icon(Icons.timer, size: 16, color: Colors.redAccent),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${recipe.readyInMinutes!.toInt()} mins',
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                const SizedBox(height: 4),
-              ],
+          ],
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 🖼 Recipe Image
+            Image.network(
+              recipe.image,
+              height: 120,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
-          ),
-          Positioned(
-            bottom: 8,
-            right: 8,
-            child: GestureDetector(
-              onTap: onFavoriteToggle,
-              child: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite ? Colors.redAccent : Colors.white,
-                size: 24,
-                shadows: const [Shadow(color: Colors.black54, blurRadius: 4)],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                recipe.title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
               ),
             ),
-          ),
-        ],
+
+            const Spacer(),
+            //const SizedBox(height: 4),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (recipe.readyInMinutes != null)
+                    Row(
+                      children: [
+                        const Icon(Icons.timer,
+                            size: 16, color: Colors.redAccent),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${recipe.readyInMinutes!.toInt()} mins',
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox(),
+
+                  GestureDetector(
+                    onTap: onFavoriteToggle,
+                    child: Icon(
+                      isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color:
+                      isFavorite ? Colors.redAccent : Colors.grey,
+                      size: 20,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+
+
